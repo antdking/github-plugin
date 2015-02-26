@@ -39,7 +39,6 @@ public class GitHubTopMenu implements TopMenu {
     this.menuEntries =
         Arrays.asList(new MenuEntry("GitHub", Arrays.asList(
             getItem("Profile", baseUrl + "/static/account.html"),
-            getItem("Repositories", baseUrl + "/static/repositories.html"),
             getItem("Pull Requests", baseUrl + "/static/pullrequests.html"))));
     this.userProvider = userProvider;
   }

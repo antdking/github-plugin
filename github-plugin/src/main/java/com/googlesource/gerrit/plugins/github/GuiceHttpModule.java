@@ -43,7 +43,7 @@ public class GuiceHttpModule extends ServletModule {
     bind(HttpClient.class).toProvider(PooledHttpClientProvider.class);
 
     bind(new TypeLiteral<ScopedProvider<GitHubLogin>>() {}).to(GitHubLogin.Provider.class);
-    bind(new TypeLiteral<ScopedProvider<GitImporter>>() {}).to(GitImporter.Provider.class);
+    //bind(new TypeLiteral<ScopedProvider<GitImporter>>() {}).to(GitImporter.Provider.class);
 
     install(new FactoryModuleBuilder().build(RemoteSiteUser.Factory.class));
 

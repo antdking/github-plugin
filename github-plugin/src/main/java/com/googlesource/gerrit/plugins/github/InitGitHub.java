@@ -15,6 +15,7 @@ package com.googlesource.gerrit.plugins.github;
 
 import java.net.URISyntaxException;
 
+import com.google.common.base.Strings;
 import com.google.gerrit.pgm.init.api.ConsoleUI;
 import com.google.gerrit.pgm.init.api.InitStep;
 import com.google.gerrit.pgm.init.api.InitUtil;
@@ -32,6 +33,14 @@ public class InitGitHub implements InitStep {
   private final Section httpd;
   private final Section github;
   private final Section gerrit;
+  
+  public enum OAuthType {
+    /* Legacy Gerrit/HTTP authentication for GitHub through HTTP Header enrichment */
+    HTTP,
+    
+    /* New native Gerrit/OAuth authentication provider */
+    OAUTH
+  }
 
   @Inject
   InitGitHub(final ConsoleUI ui, final Section.Factory sections) {
@@ -45,12 +54,6 @@ public class InitGitHub implements InitStep {
   @Override
   public void run() throws Exception {
     ui.header("GitHub Integration");
-
-    auth.set("httpHeader", "GITHUB_USER");
-    auth.set("httpExternalIdHeader", "GITHUB_OAUTH_TOKEN");
-    auth.set("loginUrl","/login");
-    auth.set("loginText", "Sign-in with GitHub");
-    auth.set("registerPageUrl", "/#/register");
 
     github.string("GitHub URL", "url", GITHUB_URL);
     github.string("GitHub API URL", "apiUrl", GITHUB_API_URL);
@@ -71,9 +74,26 @@ public class InitGitHub implements InitStep {
 
     github.string("GitHub Client ID", "clientId", null);
     github.passwordForKey("GitHub Client Secret", "clientSecret");
-    auth.string("HTTP Authentication Header", "httpHeader", "GITHUB_USER");
-    auth.set("type", "HTTP");
-    httpd.set("filterClass", "com.googlesource.gerrit.plugins.github.oauth.OAuthFilter");
+    
+    OAuthType authType = auth.select("Gerrit OAuth implementation", "type", OAuthType.HTTP);
+    if (authType.equals(OAuthType.HTTP)) {
+      auth.string("HTTP Authentication Header", "httpHeader", "GITHUB_USER");
+      httpd.set("filterClass",
+          "com.googlesource.gerrit.plugins.github.oauth.OAuthFilter");
+      authSetDefault("httpExternalIdHeader", "GITHUB_OAUTH_TOKEN");
+      authSetDefault("loginUrl","/login");
+      authSetDefault("loginText", "Sign-in with GitHub");
+      authSetDefault("registerPageUrl", "/#/register");
+    } else {
+      httpd.unset("filterClass");
+      httpd.unset("httpHeader");
+    }
+  }
+
+  private void authSetDefault(String key, String defValue) {
+    if (Strings.isNullOrEmpty(auth.get(key))) {
+      auth.set(key, defValue);
+    }
   }
 
   private String getAssumedCanonicalWebUrl() {

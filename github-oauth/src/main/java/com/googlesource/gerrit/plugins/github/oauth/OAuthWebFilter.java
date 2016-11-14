@@ -121,13 +121,13 @@ public class OAuthWebFilter implements Filter {
   private void login(ServletRequest request, HttpServletRequest httpRequest,
       HttpServletResponse httpResponse, GitHubLogin ghLogin) throws IOException {
     ghLogin.login(httpRequest, httpResponse, oauth);
-    if (ghLogin.isLoggedIn()) {
-      GHMyself myself = ghLogin.getMyself();
-      String user = myself.getLogin();
+    //if (ghLogin.isLoggedIn()) {
+    //  GHMyself myself = ghLogin.getMyself();
+    //  String user = myself.getLogin();
 
-      updateSecureConfigWithRetry(ghLogin.getHub().getMyOrganizations().keySet(),
-          user, ghLogin.getToken().accessToken);
-    }
+    //  updateSecureConfigWithRetry(ghLogin.getHub().getMyOrganizations().keySet(),
+    //      user, ghLogin.getToken().accessToken);
+    //}
   }
 
   private ServletResponse logout(ServletRequest request,

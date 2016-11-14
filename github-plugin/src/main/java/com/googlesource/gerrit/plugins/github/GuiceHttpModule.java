@@ -50,16 +50,16 @@ public class GuiceHttpModule extends ServletModule {
 
     install(new FactoryModuleBuilder().build(RemoteSiteUser.Factory.class));
 
-    install(new FactoryModuleBuilder().implement(GitCloneStep.class,
-        GitCloneStep.class).build(GitCloneStep.Factory.class));
-    install(new FactoryModuleBuilder().implement(CreateProjectStep.class,
-        CreateProjectStep.class).build(CreateProjectStep.Factory.class));
-    install(new FactoryModuleBuilder().implement(ReplicateProjectStep.class,
-        ReplicateProjectStep.class).build(ReplicateProjectStep.Factory.class));
-    install(new FactoryModuleBuilder().implement(PullRequestImportJob.class,
-        PullRequestImportJob.class).build(PullRequestImportJob.Factory.class));
-    install(new FactoryModuleBuilder().implement(GitHubRepository.class,
-        GitHubRepository.class).build(GitHubRepository.Factory.class));
+    //install(new FactoryModuleBuilder().implement(GitCloneStep.class,
+    //    GitCloneStep.class).build(GitCloneStep.Factory.class));
+    //install(new FactoryModuleBuilder().implement(CreateProjectStep.class,
+    //    CreateProjectStep.class).build(CreateProjectStep.Factory.class));
+    //install(new FactoryModuleBuilder().implement(ReplicateProjectStep.class,
+    //    ReplicateProjectStep.class).build(ReplicateProjectStep.Factory.class));
+    //install(new FactoryModuleBuilder().implement(PullRequestImportJob.class,
+    //    PullRequestImportJob.class).build(PullRequestImportJob.Factory.class));
+    //install(new FactoryModuleBuilder().implement(GitHubRepository.class,
+    //    GitHubRepository.class).build(GitHubRepository.Factory.class));
 
     bind(RuntimeInstance.class).annotatedWith(
         Names.named("PluginRuntimeInstance")).toProvider(

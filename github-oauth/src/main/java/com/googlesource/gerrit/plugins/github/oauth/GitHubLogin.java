@@ -110,7 +110,7 @@ public class GitHubLogin implements Serializable {
       Set<String> configuredScopesProfiles = config.scopes.keySet();
       String scopeRequested = getScopesKey(request, response);
       if (Strings.isNullOrEmpty(scopeRequested) && configuredScopesProfiles.size() > 1) {
-        response.sendRedirect(config.getScopeSelectionUrl(request));
+        response.sendRedirect(config.scopeSelectionUrl);
       } else {
         this.loginScopes = getScopes(MoreObjects.firstNonNull(scopeRequested, "scopes"), scopes);
         log.debug("Login-PHASE1 " + this);

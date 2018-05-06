@@ -44,6 +44,7 @@ public class GuiceModule extends AbstractModule {
     bind(new TypeLiteral<UserScopedProvider<GitHubLogin>>() {})
         .to(IdentifiedUserGitHubLoginProvider.class);
 
+    /*
     install(GitHubGroupsCache.module());
 
     DynamicSet.bind(binder(), TopMenu.class).to(GitHubTopMenu.class);
@@ -63,5 +64,6 @@ public class GuiceModule extends AbstractModule {
 
     bind(ReplicationStatusStore.class).to(ReplicationStatusFlatFile.class).in(Scopes.SINGLETON);
     bind(Gson.class).toProvider(GerritGsonProvider.class);
+    */
   }
 }

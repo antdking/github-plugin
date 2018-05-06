@@ -49,6 +49,7 @@ public class GuiceHttpModule extends ServletModule {
 
     install(new FactoryModuleBuilder().build(RemoteSiteUser.Factory.class));
 
+    /*
     install(
         new FactoryModuleBuilder()
             .implement(GitCloneStep.class, GitCloneStep.class)
@@ -69,6 +70,7 @@ public class GuiceHttpModule extends ServletModule {
         new FactoryModuleBuilder()
             .implement(GitHubRepository.class, GitHubRepository.class)
             .build(GitHubRepository.Factory.class));
+    */
 
     bind(RuntimeInstance.class)
         .annotatedWith(Names.named("PluginRuntimeInstance"))
